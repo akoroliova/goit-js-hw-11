@@ -1,5 +1,7 @@
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
 
 const images = [
   {
@@ -67,7 +69,7 @@ const images = [
   },
 ];
 
-const gallery = document.querySelector('ul.gallery');
+const gallery = document.querySelector('div.gallery');
 
 images.forEach(image => {
   const liElement = `<li class="gallery-item"><a class="gallery-link" href="${image.original}"><img class="gallery-image" src="${image.preview}" data-source="${image.original}" alt="${image.description}" /></a></li>`;
