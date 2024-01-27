@@ -11,10 +11,16 @@
 </head>
 
 <body>
-  <div class="gallery">
-    <a href="images/image1.jpg"><img src="images/thumbs/thumb1.jpg" alt="" title="" /></a>
-    <a href="images/image2.jpg"><img src="images/thumbs/thumb2.jpg" alt="" title="Beautiful Image" /></a>
-  </div>
+  <form class="search-form" autocomplete="off">
+    <label>
+      <input class="search-field" type="text" placeholder="Search images..." name="search-field" />
+    </label>
+    <button type="submit">Search</button>
+  </form>
+
+  <div class="loading-text">Loading images, please wait...</div>
+
+  <ul class="gallery"></ul>
 
   <script type="module" src="./js/main.js"></script>
 </body>

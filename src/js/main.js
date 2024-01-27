@@ -2,84 +2,77 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
+const apiKey = '42062449-cea48752956c1d9094f31db98';
+const searchForm = document.querySelector('form.search-form');
+const imagesList = document.querySelector('.gallery');
 
-const images = [
-  {
-    preview:
-      'https://cdn.pixabay.com/photo/2019/05/14/16/43/rchids-4202820__480.jpg',
-    original:
-      'https://cdn.pixabay.com/photo/2019/05/14/16/43/rchids-4202820_1280.jpg',
-    description: 'Hokkaido Flower',
-  },
-  {
-    preview:
-      'https://cdn.pixabay.com/photo/2019/05/14/22/05/container-4203677__340.jpg',
-    original:
-      'https://cdn.pixabay.com/photo/2019/05/14/22/05/container-4203677_1280.jpg',
-    description: 'Container Haulage Freight',
-  },
-  {
-    preview:
-      'https://cdn.pixabay.com/photo/2019/05/16/09/47/beach-4206785__340.jpg',
-    original:
-      'https://cdn.pixabay.com/photo/2019/05/16/09/47/beach-4206785_1280.jpg',
-    description: 'Aerial Beach View',
-  },
-  {
-    preview:
-      'https://cdn.pixabay.com/photo/2016/11/18/16/19/flowers-1835619__340.jpg',
-    original:
-      'https://cdn.pixabay.com/photo/2016/11/18/16/19/flowers-1835619_1280.jpg',
-    description: 'Flower Blooms',
-  },
-  {
-    preview:
-      'https://cdn.pixabay.com/photo/2018/09/13/10/36/mountains-3674334__340.jpg',
-    original:
-      'https://cdn.pixabay.com/photo/2018/09/13/10/36/mountains-3674334_1280.jpg',
-    description: 'Alpine Mountains',
-  },
-  {
-    preview:
-      'https://cdn.pixabay.com/photo/2019/05/16/23/04/landscape-4208571__340.jpg',
-    original:
-      'https://cdn.pixabay.com/photo/2019/05/16/23/04/landscape-4208571_1280.jpg',
-    description: 'Mountain Lake Sailing',
-  },
-  {
-    preview:
-      'https://cdn.pixabay.com/photo/2019/05/17/09/27/the-alps-4209272__340.jpg',
-    original:
-      'https://cdn.pixabay.com/photo/2019/05/17/09/27/the-alps-4209272_1280.jpg',
-    description: 'Alpine Spring Meadows',
-  },
-  {
-    preview:
-      'https://cdn.pixabay.com/photo/2019/05/16/21/10/landscape-4208255__340.jpg',
-    original:
-      'https://cdn.pixabay.com/photo/2019/05/16/21/10/landscape-4208255_1280.jpg',
-    description: 'Nature Landscape',
-  },
-  {
-    preview:
-      'https://cdn.pixabay.com/photo/2019/05/17/04/35/lighthouse-4208843__340.jpg',
-    original:
-      'https://cdn.pixabay.com/photo/2019/05/17/04/35/lighthouse-4208843_1280.jpg',
-    description: 'Lighthouse Coast Sea',
-  },
-];
+function handleSubmit(event) {
+  event.preventDefault();
 
-const gallery = document.querySelector('div.gallery');
+  const userQuery = encodeURIComponent(
+    event.target.elements['search-field'].value
+  );
 
-images.forEach(image => {
-  const liElement = `<li class="gallery-item"><a class="gallery-link" href="${image.original}"><img class="gallery-image" src="${image.preview}" data-source="${image.original}" alt="${image.description}" /></a></li>`;
+  fetchImages()
+    .then(
+      //У відповіді у властивості hits - масив зображень. Треба дістати з масиву зображень тільки потрібні параметри (href, src, alt, title, largeImgLink)
+      images => {
+        const images = response.hits;
+      }
+    )
+    .then(
+      //Потім треба створити HTML-розмітку і додати її в DOM у якийсь уже наявний елемент:
+      images => renderImages(images)
+    )
+    .then(searchForm.reset())
+    .catch(error => {
+      console.log(error);
+      //якщо бекенд повернув порожній масив, показуй iziToast з текстом 'Sorry, there are no images matching your search query. Please, try again!'
+      // if (enteredText === '') {
+      //   iziToast.error({
+      //     position: 'topRight',
+      //     title: '',
+      //     message:
+      //       'Sorry, there are no images matching your search query. Please, try again!',
+      //   });
+      // } else {};
+    });
 
-  gallery.insertAdjacentHTML('beforeend', liElement);
-});
+  function fetchImages() {
+    return fetch(
+      `https://pixabay.com/api/?key=${apiKey}&q=${userQuery}&image_type="photo"&orientation="horizontal"&safesearch=true`
+    ).then(response => {
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
+      return console.log(response.json());
+    });
+  }
 
-const lightbox = new SimpleLightbox('.gallery .gallery-link', {
-  captions: true,
-  captionsData: 'alt',
-  captionPosition: 'bottom',
-  captionDelay: 250,
-});
+  function renderImages(images) {
+    // const liElements = images
+    //   .map(image => {
+    //     return `<li>
+    //     <a href="${image.previewURL}"><img src="${image.previewURL}" alt="${image.desc}" title="${image.name}" /></a>
+    //     </li>`;
+    //   })
+    //   .join('');
+    // imagesList.insertAdjacentHTML('beforeend', liElements);
+  }
+}
+
+searchForm.addEventListener('submit', handleSubmit);
+
+//Перед пошуком за новим ключовим словом необхідно повністю очищати вміст галереї, щоб не змішувати результати запитів.
+
+//При сабміті форми перед відправкою запиту на бекенд з’являється індикатор завантаження з css-loader та очищаються попередні результати пошуку на сторінці. Після отримання відповіді від бекенда зникає індикатор завантаження та на сторінці
+
+//додаємо роботу ліби SimpleLightbox:
+// const lightboxInstance = new SimpleLightbox('div.gallery a', {
+//   captions: true,
+//   captionsData: 'alt',
+//   captionPosition: 'bottom',
+//   captionDelay: 250,
+// });
+// При кліку на маленьке зображення в галереї відкривається його збільшена версія у модальному вікні з використанням бібліотеки SimpleLightbox
+//Після додавання нових елементів до списку зображень на екземплярі SimpleLightbox викликається метод refresh()

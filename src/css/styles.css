@@ -12,6 +12,31 @@ li {
   list-style-type: none;
 }
 
+.search-form {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  padding-top: 36px;
+  margin-bottom: 32px;
+}
+
+.search-field {
+  width: 272px;
+  height: 40px;
+  border-radius: 4px;
+  border: 1px solid #808080;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  padding-left: 16px;
+}
+
+.search-field::placeholder {
+  color: #808080;
+  font-family: 'Montserrat';
+  font-size: 16px;
+  letter-spacing: 0.04em;
+}
+
 button {
   border-style: none;
   border-radius: 8px;
@@ -20,48 +45,27 @@ button {
   font-family: inherit;
   color: #FFF;
   font-size: 16px;
-  line-height: 1.5;
   letter-spacing: 0.04em;
-  margin-top: 8px;
+}
+
+.loading-text {
+  display: flex;
+  justify-content: center;
+  color: #2E2F42;
+  line-height: 1.5em;
+  letter-spacing: 0.04em;
 }
 
 .gallery {
-  padding: 24px 156px;
   display: flex;
+  justify-content: center;
+  gap: 24px;
   flex-wrap: wrap;
   flex-direction: row;
-  gap: 24px;
-  justify-content: center;
-  line-height: 0;
 }
 
 .gallery-image {
   width: 360px;
   height: 200px;
   object-fit: cover;
-}
-
-.feedback-form {
-  display: inline-flex;
-  padding: 24px;
-  flex-direction: column;
-  align-items: flex-start;
-  line-height: 1.5;
-  letter-spacing: 0.04em;
-  color: #2E2F42;
-  gap: 8px;
-}
-
-.feedback-form input,
-.feedback-form textarea {
-  display: flex;
-  width: 360px;
-  height: 40px;
-  margin-top: 8px;
-  border-radius: 4px;
-  border: 1px solid #808080;
-}
-
-.feedback-form textarea {
-  height: 80px;
 }
