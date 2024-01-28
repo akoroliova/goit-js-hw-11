@@ -13,12 +13,14 @@
 <body>
   <form class="search-form" autocomplete="off">
     <label>
-      <input class="search-field" type="text" placeholder="Search images..." name="search-field" />
+      <input class="search-field" type="text" placeholder="Search images..." name="search-field" autofocus />
     </label>
     <button type="submit">Search</button>
   </form>
 
-  <div class="loading-text">Loading images, please wait...</div>
+  <!-- <div class="loading-text">Loading images, please wait...</div> -->
+
+  <span class="loader">Loading images, please wait...</span>
 
   <ul class="gallery"></ul>
 
