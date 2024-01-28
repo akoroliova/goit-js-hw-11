@@ -9,16 +9,24 @@
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Montserrat' />
   
   <script type="module" crossorigin src="/goit-js-hw-11/commonHelpers.js"></script>
-  <link rel="modulepreload" crossorigin href="/goit-js-hw-11/assets/vendor-d5aa4654.js">
+  <link rel="modulepreload" crossorigin href="/goit-js-hw-11/assets/vendor-7659544d.js">
   <link rel="stylesheet" href="/goit-js-hw-11/assets/vendor-a51daae5.css">
-  <link rel="stylesheet" href="/goit-js-hw-11/assets/index-ee386fe0.css">
+  <link rel="stylesheet" href="/goit-js-hw-11/assets/index-8bc2368e.css">
 </head>
 
 <body>
-  <div class="gallery">
-    <a href="images/image1.jpg"><img src="images/thumbs/thumb1.jpg" alt="" title="" /></a>
-    <a href="images/image2.jpg"><img src="images/thumbs/thumb2.jpg" alt="" title="Beautiful Image" /></a>
-  </div>
+  <form class="search-form" autocomplete="off">
+    <label>
+      <input class="search-field" type="text" placeholder="Search images..." name="search-field" autofocus />
+    </label>
+    <button type="submit">Search</button>
+  </form>
+
+  <!-- <div class="loading-text">Loading images, please wait...</div> -->
+
+  <span class="loader">Loading images, please wait...</span>
+
+  <ul class="gallery"></ul>
 
   
 </body>
