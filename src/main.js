@@ -26,7 +26,7 @@ function handleSubmit(event) {
 
   function fetchImages() {
     return fetch(
-      `https://pixabay.com/api/?key=${apiKey}&q=${userQuery}&image_type="photo"&orientation="horizontal"&safesearch=true`
+      `https://pixabay.com/api/?key=${apiKey}&q=${userQuery}&image_type=photo&orientation=horizontal&safesearch=true`
     ).then(response => {
       if (!response.ok) {
         throw new Error(response.status);
@@ -72,7 +72,29 @@ function handleSubmit(event) {
   function renderImages(imagesResultingArray) {
     const liElements = imagesResultingArray
       .map(image => {
-        return `<li><a class="gallery-link" href="${image.href}"><img class="gallery-image" src="${image.src}" alt="${image.alt}" title="${image.alt}" likes="${image.likes} views="${image.views} comments="${image.comments} downloads="${image.downloads}" /></a></li>`;
+        return `<li class="gallery-card">
+      <a class="gallery-link" href="${image.href}">
+        <img class="gallery-image" src="${image.src}" alt="${image.alt}" />
+        <div class="image-stats-card">
+          <div class="image-stats-block">
+            <p>Likes</p>
+            ${image.likes}
+          </div>
+          <div class="image-stats-block">
+            <p>Views</p>
+            ${image.views}
+          </div>
+          <div class="image-stats-block">
+            <p>Comments</p>
+            ${image.comments}
+          </div>
+          <div class="image-stats-block">
+            <p>Downloads</p>
+            ${image.downloads}
+          </div>
+        </div>
+      </a>
+    </li>`;
       })
       .join('');
     imagesList.insertAdjacentHTML('beforeend', liElements);
